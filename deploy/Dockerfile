@@ -16,4 +16,4 @@ FROM nginx:alpine
 COPY deploy/nginx.conf /etc/nginx/nginx.conf
 COPY deploy/nginx.proxy.conf /etc/nginx/nginx.proxy.conf
 
-COPY --from=angular /app/dist/landing/browser /usr/share/nginx/html
+COPY --from=angular /app/dist/auth/browser /usr/share/nginx/html
