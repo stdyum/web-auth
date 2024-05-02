@@ -1,1 +1,2 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@likdan/studyum-core/public/styles.css";
+@import "../node_modules/@likdan/form-builder-material/public/form.css";

@@ -1,0 +1,18 @@
+{
+  "/api/sso": {
+    "target": "http://localhost:0600/",
+    "pathRewrite": {
+      "^/api/sso": "api"
+    },
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api/auth": {
+    "target": "http://localhost:0100/",
+    "pathRewrite": {
+      "^/api/auth": "api"
+    },
+    "secure": false,
+    "changeOrigin": true
+  }
+}
