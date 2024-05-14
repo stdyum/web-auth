@@ -58,12 +58,12 @@ export class ApplyComponent {
           this.types.set([]);
           switch (v) {
             case 'teacher':
-              this.teachersService.loadTeachersForSelect({ studyPlaceId: this.studyPlaceId() })
+              this.teachersService.loadTeachersForSelect(this.studyPlaceId())
                 .pipe(take(1))
                 .subscribe(this.types.set.bind(this.types));
               break;
             case 'student':
-              this.studentsService.loadStudentsForSelect({ studyPlaceId: this.studyPlaceId() })
+              this.studentsService.loadStudentsForSelect(this.studyPlaceId())
                 .pipe(take(1))
                 .subscribe(this.types.set.bind(this.types));
               break;
