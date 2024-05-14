@@ -5,12 +5,12 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
-import { httpErrorInterceptor } from '@likdan/studyum-core';
+import { httpErrorInterceptor, authInterceptor } from '@likdan/studyum-core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideHttpClient(withInterceptors([httpErrorInterceptor])),
+    provideHttpClient(withInterceptors([httpErrorInterceptor, authInterceptor])),
     provideRouter(routes),
     provideAnimations(),
   ],

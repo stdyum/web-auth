@@ -14,5 +14,21 @@
     },
     "secure": false,
     "changeOrigin": true
+  },
+  "/api/studyplaces": {
+    "target": "http://localhost:0200/",
+    "pathRewrite": {
+      "^/api/studyplaces": "api"
+    },
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api/types_registry": {
+    "target": "http://localhost:0300/",
+    "pathRewrite": {
+      "^/api/types_registry": "api"
+    },
+    "secure": false,
+    "changeOrigin": true
   }
 }
