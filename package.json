@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "^18.0.0-next.0",
     "@angular/router": "^18.0.0-next.0",
     "@likdan/form-builder-core": "0.0.9",
-    "@likdan/form-builder-material": "^0.0.11",
+    "@likdan/form-builder-material": "0.0.11",
     "@likdan/state-mapper": "^0.0.1",
     "@likdan/studyum-core": "0.0.12",
     "rxjs": "~7.8.0",
