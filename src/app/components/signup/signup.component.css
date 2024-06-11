@@ -12,3 +12,6 @@ fb {
   border-radius: var(--border-radius3);
 }
 
+oauth2 {
+  width: 400px;
+}

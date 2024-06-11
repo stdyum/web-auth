@@ -1,3 +1,8 @@
-<h1>SignUp</h1>
+<h1>
+  {{ 'signup_form_title' | translation }}
+</h1>
 <fb [config]="config" class="accent-container" />
-<a routerLink="/login">Already have an account? Login</a>
+<oauth2 />
+<a routerLink="/login">
+  {{ 'signup_form_login_prompt' | translation }}
+</a>

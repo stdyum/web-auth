@@ -1,15 +1,23 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormBuilderComponent, FormConfig, sendHttpRequestAndSubscribe } from '@likdan/form-builder-core';
 import { Buttons, Controls } from '@likdan/form-builder-material';
 import { Validators } from '@angular/forms';
 import { pipe, take, tap } from 'rxjs';
-import { RedirectService, StudentsService, StudyPlacesService, TeachersService } from '@likdan/studyum-core';
+import {
+  RedirectService,
+  StudentsService,
+  StudyPlacesService,
+  TeachersService,
+  TranslationPipe,
+  TranslationService,
+} from '@likdan/studyum-core';
 
 @Component({
   selector: 'app-apply',
   standalone: true,
   imports: [
     FormBuilderComponent,
+    TranslationPipe,
   ],
   templateUrl: './apply.component.html',
   styleUrl: './apply.component.css',
@@ -22,6 +30,7 @@ export class ApplyComponent {
   private teachersService = inject(TeachersService);
 
   private redirect = inject(RedirectService);
+  private translationService = inject(TranslationService);
 
   private types = signal<any[]>([]);
   private studyPlaceId = signal<string>('');
@@ -30,12 +39,12 @@ export class ApplyComponent {
     controls: {
       userName: {
         type: Controls.textInput,
-        label: 'User name',
+        label: this.translationService.getTranslation('apply_form_username'),
         validators: [Validators.required],
       },
       studyPlaceId: {
         type: Controls.select,
-        label: 'Study Place',
+        label: this.translationService.getTranslation('apply_form_studyplace'),
         additionalFields: {
           searchable: false,
           items: this.studyPlacesService.loadStudyplacesForSelect(),
@@ -45,14 +54,14 @@ export class ApplyComponent {
       },
       role: {
         type: Controls.select,
-        label: 'Role',
+        label: this.translationService.getTranslation('apply_form_role'),
         additionalFields: {
           searchable: false,
-          items: [
-            { value: 'teacher', display: 'Teacher' },
-            { value: 'student', display: 'Student' },
-            { value: 'stuff', display: 'Stuff' },
-          ],
+          items: computed(() => [
+            { value: 'teacher', display: this.translationService.getTranslation('apply_form_role_teacher')() },
+            { value: 'student', display: this.translationService.getTranslation('apply_form_role_student')() },
+            { value: 'stuff', display: this.translationService.getTranslation('apply_form_role_stuff')() },
+          ]),
         },
         valueChanges: v => {
           this.types.set([]);
@@ -73,7 +82,7 @@ export class ApplyComponent {
       },
       typeId: {
         type: Controls.select,
-        label: 'Type',
+        label: this.translationService.getTranslation('apply_form_type'),
         additionalFields: {
           searchable: false,
           items: this.types,
@@ -82,7 +91,7 @@ export class ApplyComponent {
     },
     submit: {
       button: Buttons.Submit.Flat,
-      buttonText: 'Submit',
+      buttonText: this.translationService.getTranslation('apply_form_submit'),
       onSubmit: sendHttpRequestAndSubscribe({
         url: 'api/studyplaces/v1/enrollments',
         method: 'POST',
