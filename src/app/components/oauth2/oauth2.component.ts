@@ -16,6 +16,6 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class Oauth2Component {
   oauth2(provider: string): void {
-    window.location.href = `http://localhost:0100/api/v1/auth/oauth2/${provider}`
+    window.location.href = `https://api-auth.studyum.net/api/v1/auth/oauth2/${provider}`
   }
 }
