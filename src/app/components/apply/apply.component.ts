@@ -2,15 +2,15 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { FormBuilderComponent, FormConfig, sendHttpRequestAndSubscribe } from '@likdan/form-builder-core';
 import { Buttons, Controls } from '@likdan/form-builder-material';
 import { Validators } from '@angular/forms';
-import { pipe, take, tap } from 'rxjs';
+import { Observable, pipe, tap } from 'rxjs';
 import {
   RedirectService,
-  StudentsService,
+  RegistryService,
   StudyPlacesService,
-  TeachersService,
   TranslationPipe,
   TranslationService,
 } from '@likdan/studyum-core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-apply',
@@ -24,17 +24,14 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApplyComponent {
+  selectedRowItems = signal<Object>([]);
+
   private studyPlacesService = inject(StudyPlacesService);
-
-  private studentsService = inject(StudentsService);
-  private teachersService = inject(TeachersService);
-
+  private registry = inject(RegistryService);
   private redirect = inject(RedirectService);
   private translationService = inject(TranslationService);
 
-  private types = signal<any[]>([]);
   private studyPlaceId = signal<string>('');
-
   config = <FormConfig<any>>{
     controls: {
       userName: {
@@ -64,19 +61,21 @@ export class ApplyComponent {
           ]),
         },
         valueChanges: v => {
-          this.types.set([]);
+          let config: Object = {};
           switch (v) {
             case 'teacher':
-              this.teachersService.loadForSelect(null, this.studyPlaceId())
-                .pipe(take(1))
-                .subscribe(this.types.set.bind(this.types));
+              config = this.registry.getTeachersPaginatedSelectConfig();
               break;
             case 'student':
-              this.studentsService.loadForSelect(null, this.studyPlaceId())
-                .pipe(take(1))
-                .subscribe(this.types.set.bind(this.types));
+              config = this.registry.getStudentsPaginatedSelectConfig();
               break;
+            default:
+              return;
           }
+
+          ((config as any)['items'] as Observable<any[]>)
+            .pipe(takeUntilDestroyed())
+            .subscribe(i => this.selectedRowItems.set({ ...config, items: i }));
         },
         validators: [Validators.required],
       },
@@ -84,8 +83,12 @@ export class ApplyComponent {
         type: Controls.select,
         label: this.translationService.getTranslation('apply_form_type'),
         additionalFields: {
-          searchable: false,
-          items: this.types,
+          searchable: true,
+          searchInputText: this.translationService.getTranslation('controls_select_search'),
+          loadNextButtonText: this.translationService.getTranslation('controls_select_load_next'),
+          items: computed(() => (this.selectedRowItems() as any)['items']),
+          next: computed(() => (this.selectedRowItems() as any)['next']),
+          reload: computed(() => (this.selectedRowItems() as any)['reload']),
         },
       },
     },
