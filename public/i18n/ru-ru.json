@@ -24,5 +24,7 @@
   "apply_form_role_stuff": "Персонал",
   "apply_form_type": "Тип",
   "apply_form_submit": "Отправить",
-  "apply_form_signup_prompt": "Нет аккаунта? Зарегистрируйтесь"
+  "apply_form_signup_prompt": "Нет аккаунта? Зарегистрируйтесь",
+  "controls_select_search": "Поиск",
+  "controls_select_load_next": "Загрузить еще"
 }

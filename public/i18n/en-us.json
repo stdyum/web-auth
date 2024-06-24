@@ -24,5 +24,7 @@
   "apply_form_role_stuff": "Stuff",
   "apply_form_type": "Type",
   "apply_form_submit": "Submit",
-  "apply_form_signup_prompt": "Not have an account? SignUp"
+  "apply_form_signup_prompt": "Not have an account? SignUp",
+  "controls_select_search": "Search",
+  "controls_select_load_next": "Load next"
 }

@@ -64,10 +64,10 @@ export class ApplyComponent {
           let config: Object = {};
           switch (v) {
             case 'teacher':
-              config = this.registry.getTeachersPaginatedSelectConfig();
+              config = this.registry.getTeachersPaginatedSelectConfig(this.studyPlaceId());
               break;
             case 'student':
-              config = this.registry.getStudentsPaginatedSelectConfig();
+              config = this.registry.getStudentsPaginatedSelectConfig(this.studyPlaceId());
               break;
             default:
               return;

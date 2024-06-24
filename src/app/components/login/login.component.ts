@@ -55,13 +55,6 @@ export class LoginComponent {
         url: 'api/sso/v1/login',
         method: 'POST',
         pipeline: pipe(tap(() => this.redirect.redirect(''))),
-      }, event => {
-        const sessionExpirationAtDate: Date = event.value.sessionExpirationAt.date;
-        const sessionExpirationAtTime = event.value.sessionExpirationAt.time;
-        sessionExpirationAtDate.setHours(sessionExpirationAtTime.hour, sessionExpirationAtTime.minute);
-
-        event.value.sessionExpirationAt = sessionExpirationAtDate;
-        return event.value;
       }),
     },
   };
